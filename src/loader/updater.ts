@@ -1,11 +1,12 @@
 import { IApi } from '@mdfjs/types';
+import { genRoutesPath } from '@mdfjs/utils';
 import { readFileSync } from 'fs';
 import { debounce, eq, isEmpty } from 'lodash';
 // @ts-ignore
 import requireFromString from 'require-from-string';
 import { runInContext, createContext } from 'vm';
 import { extname, join, relative } from 'path';
-import { genRoutesPath, normalizePath } from '../utils';
+import { normalizePath } from '../utils';
 import { IRoute } from '../route/getRoutes';
 import writeRoutes from '../route/writeRoutes';
 

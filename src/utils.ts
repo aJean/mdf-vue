@@ -6,20 +6,6 @@ import { kebabCase } from 'lodash';
  * @file utils
  */
 
-export function genRootPath(api: any) {
-  const { framework } = api.getConfig();
-
-  return framework.root || 'src';
-}
-
-export function genRoutesPath(api: any) {
-  return `${genRootPath(api)}/pages`;
-}
-
-export function genModelsPath(api: any) {
-  return `${genRootPath(api)}/models`;
-}
-
 export const RE_DYNAMIC_ROUTE = /^\[(.+?)\]/;
 
 /**

@@ -1,11 +1,10 @@
 import { resolve as resolvePath } from 'path';
 import { IApi, IJoi } from '@mdfjs/types';
-import { chalkPrints } from '@mdfjs/utils';
+import { chalkPrints, genRoutesPath } from '@mdfjs/utils';
 import getRoutes from './getRoutes';
 import mergeRoutes from './mergeRoutes';
 import writeRoutes from './writeRoutes';
 import { initUpdater } from '../loader/updater';
-import { genRoutesPath } from '../utils';
 
 /**
  * @file 根据文件结构生成路由配置
