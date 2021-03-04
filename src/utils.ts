@@ -1,5 +1,3 @@
-import { IApi } from '@mdfjs/types';
-import { watch } from '@mdfjs/utils';
 import { join } from 'path';
 import { existsSync } from 'fs';
 import { kebabCase } from 'lodash';

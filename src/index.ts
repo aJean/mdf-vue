@@ -6,23 +6,7 @@ import chain from './compiler/chain';
  */
 
 export default function (api: IApi) {
-  // @todo: initPresets 阶段会取不到 default 的值
-  api.describe({
-    key: 'framework',
-
-    config: {
-      schema(joi: IJoi) {
-        return joi
-          .object({
-            type: joi.string(),
-            root: joi.string(),
-          })
-          .required();
-      },
-
-      default: { type: 'vuex' },
-    },
-  });
+  const { project } = api.getConfig();
 
   api.changeUserConfig((config: any) => {
     config.appEntry = `${api.cwd}/.tmp/mdf.ts`;
