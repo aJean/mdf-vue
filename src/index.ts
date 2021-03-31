@@ -1,4 +1,4 @@
-import { IApi, IJoi } from '@mdfjs/types';
+import { IApi } from '@mdfjs/types';
 import chain from './compiler/chain';
 
 /**
@@ -8,6 +8,7 @@ import chain from './compiler/chain';
 export default function (api: IApi) {
   const { project } = api.getConfig();
 
+  // 设置入口文件
   api.changeUserConfig((config: any) => {
     config.appEntry = `${api.cwd}/.tmp/mdf.ts`;
     return config;
