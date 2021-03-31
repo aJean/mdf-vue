@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { existsSync } from 'fs';
 import { kebabCase } from 'lodash';
+import { exit } from 'process';
 
 /**
  * @file utils
@@ -30,11 +31,13 @@ const extsMap: Record<FileType, string[]> = {
  * - matched: `{ path: string; filename: string }`
  * - otherwise: `null`
  */
-export function getFile(opts: IGetFileOpts) {
+export function findFile(opts: IGetFileOpts) {
   const exts = extsMap[opts.type];
+
   for (const ext of exts) {
     const filename = `${opts.fileNameWithoutExt}${ext}`;
     const path = winPath(join(opts.base, filename));
+
     if (existsSync(path)) {
       return {
         path,
@@ -42,6 +45,7 @@ export function getFile(opts: IGetFileOpts) {
       };
     }
   }
+
   return null;
 }
 

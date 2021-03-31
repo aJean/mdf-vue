@@ -17,7 +17,7 @@ interface IGetFileOpts {
  * - matched: `{ path: string; filename: string }`
  * - otherwise: `null`
  */
-export declare function getFile(opts: IGetFileOpts): {
+export declare function findFile(opts: IGetFileOpts): {
     path: string;
     filename: string;
 } | null;

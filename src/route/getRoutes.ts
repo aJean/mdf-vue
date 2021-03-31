@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, statSync } from 'fs';
 import { basename, extname, join, relative } from 'path';
 import { camelCase } from 'lodash';
-import { getFile, normalizePath, winPath, RE_DYNAMIC_ROUTE } from '../utils';
+import { findFile, normalizePath, winPath, RE_DYNAMIC_ROUTE } from '../utils';
 import assert from 'assert';
 
 /**
@@ -25,25 +25,33 @@ export interface IRoute {
   [key: string]: any;
 }
 
-function getFiles(root: string) {
-  if (!existsSync(root)) return [];
+/**
+ * 查找页面类型的文件，目前先查到所以再过滤，可以优化
+ */
+function findPages(root: string) {
+  if (!existsSync(root)) {
+    return [];
+  }
+
   return readdirSync(root).filter((file) => {
     const absFile = join(root, file);
-    const fileStat = statSync(absFile);
-    const isDirectory = fileStat.isDirectory();
-    const isFile = fileStat.isFile();
-    if (isDirectory && ['components', 'component', 'utils', 'util'].includes(file)) {
+    const stat = statSync(absFile);
+
+    // pages 下排除的目录
+    if (stat.isDirectory() && ['components', 'component', 'utils', 'util'].includes(file)) {
       return false;
     }
-    if (file.charAt(0) === '.') return false;
-    if (file.charAt(0) === '_') return false;
+
+    if (file.charAt(0) === '.' || file.charAt(0) === '_') return false;
     // exclude test file
     if (/\.(test|spec|e2e)\.(j|t)sx?$/.test(file)) return false;
     // d.ts
     if (/\.d\.ts$/.test(file)) return false;
-    if (isFile) {
+
+    if (stat.isFile()) {
       if (!/\.((j|t)sx?|vue)$/.test(file)) return false;
     }
+
     return true;
   });
 }
@@ -53,17 +61,15 @@ function fileToRouteReducer(opts: IOpts, memo: IRoute[], file: string) {
   const absFile = join(root, relDir, file);
   const stats = statSync(absFile);
   const __isDynamic = RE_DYNAMIC_ROUTE.test(file);
+
   if (stats.isDirectory()) {
     const relFile = join(relDir, file);
-    const layoutFile = getFile({
+    const layoutFile = findFile({
       base: join(root, relFile),
       fileNameWithoutExt: '_layout',
       type: 'javascript',
     });
-    const children = getRoutes({
-      ...opts,
-      relDir: join(relFile),
-    });
+    const children = getRoutes({ ...opts, relDir: join(relFile) });
     const path = normalizePath(relFile);
     const routeName = camelCase(path);
     const route: IRoute = {
@@ -80,14 +86,17 @@ function fileToRouteReducer(opts: IOpts, memo: IRoute[], file: string) {
             componentPath: '',
           }),
     };
+
     if (children.length) {
       route.children = children;
     }
+
     memo.push(normalizeRoute(route, opts));
   } else {
     const bName = basename(file, extname(file));
     const path = normalizePath(join(relDir, bName));
     const routeName = camelCase(path);
+
     memo.push(
       normalizeRoute(
         {
@@ -101,6 +110,7 @@ function fileToRouteReducer(opts: IOpts, memo: IRoute[], file: string) {
       ),
     );
   }
+
   return memo;
 }
 
@@ -144,7 +154,8 @@ function normalizeRoutes(routes: IRoute[]): IRoute[] {
 
 export default function getRoutes(opts: IOpts) {
   const { root, relDir = '' } = opts;
-  const files = getFiles(join(root, relDir));
+  const files = findPages(join(root, relDir));
+  console.log(files);
   const routes = normalizeRoutes(files.reduce(fileToRouteReducer.bind(null, opts), []));
 
   return routes;
