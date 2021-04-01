@@ -6,7 +6,7 @@ import { debounce, eq, isEmpty } from 'lodash';
 import requireFromString from 'require-from-string';
 import { runInContext, createContext } from 'vm';
 import { extname, join, relative } from 'path';
-import { normalizePath } from '../utils';
+import { genRoutePath } from '../utils';
 import { IRoute } from '../route/getRoutes';
 import writeRoutes from '../route/writeRoutes';
 
@@ -25,17 +25,21 @@ export function initUpdater(api: IApi) {
   updater = debounce(function ({ filename, source }: LoaderOpts) {
     const { paths, cwd } = api;
     const filePath = relative(join(cwd, genRoutesPath(api)), filename);
-    const routePath = normalizePath(filePath.replace(extname(filePath), ''));
+    // 用变化的文件反解出路由 path
+    const routePath = genRoutePath(filePath.replace(extname(filePath), ''));
     const content = readFileSync(join(paths.absTmpPath, 'routes.ts'), { encoding: 'utf-8' });
+    // 把 routes.ts 读到内存
     const routes = requireFromString(content.replace('export default', 'module.exports ='));
     let isModify = false;
 
+    // 递归找到对应的路由对象
     function routePatch(route: IRoute) {
       // 文件与路由匹配
       if (route.path === routePath) {
         const context = createContext({ temp: {} });
         runInContext(`temp=${source}`, context);
 
+        // 检测属性变化
         Object.keys(context.temp).forEach((k) => {
           if (!eq(context.temp[k], route)) {
             route[k] = context.temp[k];
@@ -56,4 +60,4 @@ export function initUpdater(api: IApi) {
 
 export function getUpdater() {
   return updater;
-};
+}

@@ -4,34 +4,41 @@ import { join } from 'path';
 import { IRoute } from './getRoutes';
 
 /**
- * @file writeRoutes
+ * @file 将收集到的 routes 写入 .tmp/routes.ts
  */
 
-// 序列化routes，将数据处理成便于文件写入的格式，主要是将函数处理为字符串
+// 序列化 routes，将数据处理成便于文件写入的格式，主要是将函数处理为字符串
 function routesSerialize(routes: IRoute[]) {
-  function replacer(k: string, v: any) {
-    if (typeof v === 'function') {
-      let res = `${v}`;
+  function replacer(key: string, val: any) {
+    if (typeof val === 'function') {
+      let res = `${val}`;
       if (!res.includes('function')) {
         res = `function ${res}`;
       }
       return res;
     }
-    return v;
+
+    return val;
   }
 
   routes.forEach(function forEach(route) {
-    if (!route) return;
-    Object.keys(route).forEach((k) => {
-      if (k !== 'children') {
-        const v = route[k];
+    if (!route) {
+      return;
+    }
+
+    Object.keys(route).forEach((key) => {
+      if (key !== 'children') {
+        const val = route[key];
         let isFunc = false;
-        if (typeof v === 'function') {
+
+        if (typeof val === 'function') {
           isFunc = true;
         }
-        route[k] = JSON.stringify(v, replacer);
+
+        route[key] = JSON.stringify(val, replacer);
+
         if (isFunc) {
-          route[k] = JSON.parse(route[k]);
+          route[key] = JSON.parse(route[key]);
         }
       } else if (route.children) {
         route.children.forEach(forEach);
@@ -46,16 +53,10 @@ export default function writeRoutes(routes: IRoute[], api: IApi) {
   const { getFile, Mustache, paths } = api;
 
   try {
-    const routesSer = routesSerialize(routes);
+    const routesData = routesSerialize(routes);
     const tpl = getFile(join(__dirname, './tpl/routes.tpl'));
     const itemTpl = getFile(join(__dirname, './tpl/item.tpl'));
-    const content = Mustache.render(
-      tpl,
-      { routes: routesSer },
-      {
-        item: itemTpl,
-      },
-    );
+    const content = Mustache.render(tpl, { routes: routesData }, { item: itemTpl });
 
     api.writeFile(`${paths.absTmpPath}/routes.ts`, prettierFormat(content));
   } catch (e) {

@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { existsSync } from 'fs';
 import { kebabCase } from 'lodash';
-import { exit } from 'process';
 
 /**
  * @file utils
@@ -18,7 +17,7 @@ type FileType = 'javascript' | 'css';
 interface IGetFileOpts {
   base: string;
   type: FileType;
-  fileNameWithoutExt: string;
+  pattern: string;
 }
 
 const extsMap: Record<FileType, string[]> = {
@@ -35,7 +34,7 @@ export function findFile(opts: IGetFileOpts) {
   const exts = extsMap[opts.type];
 
   for (const ext of exts) {
-    const filename = `${opts.fileNameWithoutExt}${ext}`;
+    const filename = `${opts.pattern}${ext}`;
     const path = winPath(join(opts.base, filename));
 
     if (existsSync(path)) {
@@ -57,19 +56,19 @@ export function winPath(path: string) {
 /**
  * 标准化 route path
  */
-export function normalizePath(path: string) {
+export function genRoutePath(path: string) {
   path = winPath(path)
     .split('/')
-    .map((p) => {
-      // dynamic route
+    .map((p: string) => {
+      // vue 动态路径
       p = p.replace(RE_DYNAMIC_ROUTE, ':$1');
 
       // :post$ => :post?
       if (p.endsWith('$')) {
-        p = p.slice(0, -1) + '?';
+        p = p.replace(/\$$/, '?');
       }
-      p = kebabCase(p);
-      return p;
+
+      return kebabCase(p);
     })
     .join('/');
 
@@ -80,12 +79,11 @@ export function normalizePath(path: string) {
     path = '/';
   }
 
-  // /xxxx/index -> /xxxx/
+  // 退化层级: xxxx/index -> /xxxx/，这也要求相同目录下不允许 layout 与 index 同时存在
   path = path.replace(/\/index$/, '/');
 
-  // remove the last slash
-  // e.g. /abc/ -> /abc
-  if (path !== '/' && path.slice(-1) === '/') {
+  // 去掉最后一个 slash: /abc/ -> /abc
+  if (path !== '/' && path.endsWith('/')) {
     path = path.slice(0, -1);
   }
 

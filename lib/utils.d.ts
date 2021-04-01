@@ -10,7 +10,7 @@ declare type FileType = 'javascript' | 'css';
 interface IGetFileOpts {
     base: string;
     type: FileType;
-    fileNameWithoutExt: string;
+    pattern: string;
 }
 /**
  * Try to match the exact extname of the file in a specific directory.
@@ -25,7 +25,7 @@ export declare function winPath(path: string): string;
 /**
  * 标准化 route path
  */
-export declare function normalizePath(path: string): string;
+export declare function genRoutePath(path: string): string;
 /**
  * transform route component into webpack chunkName
  */

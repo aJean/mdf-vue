@@ -1,9 +1,9 @@
 /**
- * @file getRoutes
+ * @file 获取路由列表
  */
 interface IOpts {
     root: string;
-    relDir?: string;
+    parentDir?: string;
 }
 export interface IRoute {
     name: string;
@@ -11,7 +11,6 @@ export interface IRoute {
     path?: string;
     children?: IRoute[] | null;
     wrappers?: string[];
-    /**是否是动态路由 */
     __isDynamic?: boolean;
     componentPath?: string;
     [key: string]: any;
