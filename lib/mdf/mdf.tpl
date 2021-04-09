@@ -8,8 +8,6 @@ import { plugin, config } from './plugins/plugin';
  * @file vue entry
  */
 
-plugin.invoke({ key: 'beforeRender', type: PluginType.event, args: [config] });
-
 const router = VueRouter.createRouter({
   history: VueRouter.{{{ historyFn }}},
   routes: routes
@@ -18,4 +16,6 @@ const router = VueRouter.createRouter({
 const app = createApp({
   render: () => h(VueRouter.RouterView)
 });
+
+plugin.invoke({ key: 'beforeRender', type: PluginType.event, args: [config, app] });
 app.use(router).mount('#root');
