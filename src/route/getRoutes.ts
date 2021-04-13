@@ -26,13 +26,15 @@ export interface IRoute {
 /**
  * 查找页面类型的文件，目前先查到所以再过滤，可以优化
  */
-function findPages(root: string) {
-  if (!existsSync(root)) {
+function findPages(root: string, path?: string) {
+  const dir = path ? join(root, path) : root;
+
+  if (!existsSync(dir)) {
     return [];
   }
 
-  return readdirSync(root).filter((file) => {
-    const absFile = join(root, file);
+  return readdirSync(dir).filter((file) => {
+    const absFile = join(dir, file);
     const stat = statSync(absFile);
 
     // pages 下排除的目录
@@ -65,16 +67,16 @@ function pathToRoute(opts: IOpts, memo: IRoute[], path: string) {
   if (statSync(absPath).isDirectory()) {
     // 相对目录用于生成路由
     const dir = join(parentDir, path);
-    // 查找目录下的 layout 作为本级目录路由，注意 index 在 normalizePath 处理
-    const pageFile = findFile({ base: absPath, pattern: 'layout', type: 'javascript' });
+    // 查找目录下的 layout 作为本级目录路由，注意 index 在 files 里处理，只作为普通路由
+    const layout = findFile({ base: absPath, pattern: 'layout', type: 'javascript' });
     // 递归查找子目录
     const children = getRoutes({ ...opts, parentDir: dir });
     const routePath = genRoutePath(dir);
     const routeName = camelCase(routePath);
     const route: IRoute = { path: routePath, children: null, name: routeName, __isDynamic };
 
-    if (pageFile) {
-      route.componentPath = pageFile.path;
+    if (layout) {
+      route.componentPath = layout.path;
       // 目录本身不存在实体路由，单纯作为 parent path
     } else {
       route.__toMerge = true;
@@ -85,24 +87,24 @@ function pathToRoute(opts: IOpts, memo: IRoute[], path: string) {
     }
 
     memo.push(addImport(route, opts));
-    // 文件
+    // 页面文件，递归结束添加到上级的 children 中
   } else {
-    const bName = basename(path, extname(path));
-    const routePath = genRoutePath(join(parentDir, bName));
-    const routeName = camelCase(routePath);
+    const childName = basename(path, extname(path));
 
-    memo.push(
-      addImport(
-        {
-          path: routePath,
-          name: routeName,
-          componentPath: absPath,
-          children: null,
-          __isDynamic,
-        },
-        opts,
-      ),
-    );
+    // 不重复收集 layout.xx
+    if (childName !== 'layout') {
+      const routePath = genRoutePath(join(parentDir, childName));
+      const routeName = camelCase(routePath);
+      const childRoute = {
+        path: routePath,
+        name: routeName,
+        componentPath: absPath,
+        children: null,
+        __isDynamic,
+      };
+
+      memo.push(addImport(childRoute, opts));
+    }
   }
 
   return memo;
@@ -116,7 +118,7 @@ function addImport(route: IRoute, opts: IOpts) {
 
   if (path) {
     try {
-      let componentPath = winPath(relative(join(opts.root, '..'), path));
+      let componentPath = winPath(relative(opts.root, path));
       // typescript 不允许 import .ts|tsx
       componentPath = componentPath.replace(/\.(ts|tsx)$/, '');
 
@@ -145,9 +147,14 @@ function eliminateRoutes(routes: IRoute[]): IRoute[] {
 }
 
 export default function getRoutes(opts: IOpts) {
-  const { root, parentDir = '' } = opts;
-  const pagePaths = findPages(join(root, parentDir));
-  const routes = pagePaths.reduce(pathToRoute.bind(null, opts), []);
+  let routes;
+
+  if (!opts.parentDir) {
+    routes = pathToRoute(opts, [], 'pages');
+  } else {
+    const pagePaths = findPages(opts.root, opts.parentDir);
+    routes = pagePaths.reduce(pathToRoute.bind(null, opts), []);
+  }
 
   return eliminateRoutes(routes);
 }

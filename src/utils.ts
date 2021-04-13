@@ -72,22 +72,10 @@ export function genRoutePath(path: string) {
     })
     .join('/');
 
-  path = `/${path}`;
+  // 退化层级: xxxx/index -> /xxxx，这也要求相同目录下不允许 layout 与 index 同时存在
+  path = `/${path}`.replace(/\/index$/, '').replace('/pages', '');
 
-  // /index/index -> /
-  if (path === '/index/index') {
-    path = '/';
-  }
-
-  // 退化层级: xxxx/index -> /xxxx/，这也要求相同目录下不允许 layout 与 index 同时存在
-  path = path.replace(/\/index$/, '/');
-
-  // 去掉最后一个 slash: /abc/ -> /abc
-  if (path !== '/' && path.endsWith('/')) {
-    path = path.slice(0, -1);
-  }
-
-  return path;
+  return path || '/';
 }
 
 /**

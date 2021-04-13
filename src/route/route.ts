@@ -54,7 +54,7 @@ export default function routes(api: IApi) {
    * @multi 生成用户路由文件
    */
   function genRoutes() {
-    const routes = getRoutes({ root: routesPath });
+    const routes = getRoutes({ root: routesPath.replace('/pages', '') });
 
     mergeRoutes(routes, api);
     writeRoutes(routes, api);
