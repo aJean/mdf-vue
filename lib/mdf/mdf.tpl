@@ -10,7 +10,7 @@ import { plugin, config } from './plugins/plugin';
 
 const router = VueRouter.createRouter({
   history: VueRouter.{{{ historyFn }}},
-  routes: routes
+  routes: routes as any,
 });
 
 const app = createApp({
@@ -18,5 +18,5 @@ const app = createApp({
 });
 
 app['router'] = router;
-plugin.invoke({ key: 'beforeRender', type: PluginType.event, args: [config, app, router] });
+plugin.invoke({ key: 'beforeRender', type: PluginType.event, args: [config, app] });
 app.use(router).mount('#root');
