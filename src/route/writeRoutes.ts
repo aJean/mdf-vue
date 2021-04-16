@@ -51,6 +51,7 @@ function routesSerialize(routes: IRoute[]) {
 
 export default function writeRoutes(routes: IRoute[], api: IApi) {
   const { getFile, Mustache, paths } = api;
+  Mustache.templateCache = undefined;
 
   try {
     const routesData = routesSerialize(routes);
@@ -58,6 +59,7 @@ export default function writeRoutes(routes: IRoute[], api: IApi) {
     const itemTpl = getFile(join(__dirname, './tpl/item.tpl'));
     const content = Mustache.render(tpl, { routes: routesData }, { item: itemTpl });
 
+    // mustache partial
     api.writeFile(`${paths.absTmpPath}/routes.ts`, prettierFormat(content));
   } catch (e) {
     errorPrint(e);

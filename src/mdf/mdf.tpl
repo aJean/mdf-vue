@@ -17,5 +17,6 @@ const app = createApp({
   render: () => h(VueRouter.RouterView)
 });
 
-plugin.invoke({ key: 'beforeRender', type: PluginType.event, args: [config, app] });
+app['router'] = router;
+plugin.invoke({ key: 'beforeRender', type: PluginType.event, args: [config, app, router] });
 app.use(router).mount('#root');

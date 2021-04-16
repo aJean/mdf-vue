@@ -72,8 +72,12 @@ export function genRoutePath(path: string) {
     })
     .join('/');
 
+  if (path === '/layout') {
+    path = '/';
+  }
+
   // 退化层级: xxxx/index -> /xxxx，这也要求相同目录下不允许 layout 与 index 同时存在
-  path = `/${path}`.replace(/\/index$/, '').replace('/pages', '');
+  path = `/${path}`.replace(/\/index|\/layout$/, '').replace('/pages', '');
 
   return path || '/';
 }
@@ -104,4 +108,32 @@ export function routeToChunkName(data: any) {
         .replace(/^pages__/, 'p__')
         .replace(/^page__/, 'p__')
     : '';
+}
+
+/**
+ * 防止 mustache tpl 递归时向上查找变量
+ */
+export function assignRoute(route: any, extra?: any) {
+  return Object.assign(route, endLookup(), extra);
+}
+
+/**
+ * updater 使用
+ */
+export function assignContext(context: any) {
+  return Object.assign(endLookup(), context.temp);
+}
+
+/**
+ * 必须设置的 route 属性
+ */
+export function endLookup() {
+  return {
+    props: null,
+    meta: null,
+    redirect: null,
+    beforeEach: null,
+    beforeEnter: null,
+    afterEach: null,
+  };
 }

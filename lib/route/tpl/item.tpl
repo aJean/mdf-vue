@@ -1,9 +1,18 @@
 {
   path: {{{path}}},
-
   {{#name}}
   name: {{{name}}},
   {{/name}}
+  {{#redirect}}
+  redirect: {{{redirect}}},
+  {{/redirect}}
+  {{#meta}}
+  meta: {{{meta}}},
+  {{/meta}}
+  {{#props}}
+  // @ts-ignore
+  props: {{{ props}}},
+  {{/props}}
 
   {{#component}}
   component: {{{component}}},
@@ -13,27 +22,21 @@
   component: {{{alias}}},
   {{/alias}}
 
-  {{#meta}}
-  meta: {{{meta}}},
-  {{/meta}}
+  {{#beforeEach}}
+  beforeEach: {{{beforeEach}}},
+  {{/beforeEach}}
 
-  {{#redirect}}
-  redirect: {{{redirect}}},
-  {{/redirect}}
+  {{#afterEach}}
+  afterEach: {{{afterEach}}},
+  {{/afterEach}}
 
-   children: [
+  {{#beforeEnter}}
+  beforeEnter: {{{beforeEnter}}},
+  {{/beforeEnter}}
+
+  children: [
     {{#children}}
       {{> item}}
     {{/children}}
-   ],
-
-  {{#props}}
-  // @ts-ignore
-  props: {{{ props}}},
-  {{/props}}
-
-
-   {{#beforeEnter}}
-   beforeEnter: {{{beforeEnter}}},
-   {{/beforeEnter}}
+  ],
 },

@@ -6,7 +6,7 @@ import { debounce, eq, isEmpty } from 'lodash';
 import requireFromString from 'require-from-string';
 import { runInContext, createContext } from 'vm';
 import { extname, join, relative } from 'path';
-import { genRoutePath } from '../utils';
+import { genRoutePath, assignContext } from '../utils';
 import { IRoute } from '../route/getRoutes';
 import writeRoutes from '../route/writeRoutes';
 
@@ -39,10 +39,10 @@ export function initUpdater(api: IApi) {
         const context = createContext({ temp: {} });
         runInContext(`temp=${source}`, context);
 
-        // 检测属性变化
-        Object.keys(context.temp).forEach((k) => {
-          if (!eq(context.temp[k], route)) {
-            route[k] = context.temp[k];
+        const temp = assignContext(context);
+        Object.keys(temp).forEach((k) => {
+          if (!eq(temp[k], route[k])) {
+            route[k] = temp[k];
             isModify = true;
           }
         });

@@ -30,4 +30,23 @@ export declare function genRoutePath(path: string): string;
  * transform route component into webpack chunkName
  */
 export declare function routeToChunkName(data: any): any;
+/**
+ * 防止 mustache tpl 递归时向上查找变量
+ */
+export declare function assignRoute(route: any, extra?: any): any;
+/**
+ * updater 使用
+ */
+export declare function assignContext(context: any): any;
+/**
+ * 必须设置的 route 属性
+ */
+export declare function endLookup(): {
+    props: null;
+    meta: null;
+    redirect: null;
+    beforeEach: null;
+    beforeEnter: null;
+    afterEach: null;
+};
 export {};
