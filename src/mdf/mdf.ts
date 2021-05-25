@@ -8,7 +8,7 @@ import { join } from 'path';
 
 export default function entry(api: IApi) {
   const { paths, Mustache } = api;
-  const { type, base } = api.getConfig().history;
+  const { type, base = '' } = api.getConfig().history;
 
   let historyFn = '';
 
