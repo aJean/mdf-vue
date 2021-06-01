@@ -2,14 +2,14 @@ import { IApi } from '@mdfjs/types';
 import { parse } from '@vue/compiler-sfc';
 import { runInContext, createContext } from 'vm';
 import { readFileSync } from 'fs';
-import { IRoute } from './getRoutes';
-import { assignRoute } from '../utils';
+import { IRoute } from './find';
+import { assignRoute, collectScrollBehavior } from '../utils';
 
 /**
  * @file 首次启动编译，需要自己合并 router block 配置，运行时依赖 vue loader
  */
 
-function getOptions(route: IRoute, api: IApi) {
+function getBlocks(route: IRoute, api: IApi) {
   let filename = route.componentPath!;
 
   if (!filename) {
@@ -40,14 +40,16 @@ function getOptions(route: IRoute, api: IApi) {
     console.error(error);
   }
 
+  collectScrollBehavior(context)
   assignRoute(route, context.temp);
+
   return route;
 }
 
 export default function mergeConfig(routes: IRoute[], api: IApi) {
   for (let index = 0; index < routes.length; index++) {
     let route = routes[index];
-    route = getOptions(route, api);
+    route = getBlocks(route, api);
 
     if (route.children) {
       route.children = mergeConfig(route.children, api);

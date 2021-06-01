@@ -1,5 +1,5 @@
 /**
- * @file 获取路由列表
+ * @file 查找并生成路由列表
  */
 interface IOpts {
     root: string;
@@ -15,5 +15,5 @@ export interface IRoute {
     componentPath?: string;
     [key: string]: any;
 }
-export default function getRoutes(opts: IOpts): IRoute[];
+export default function findRoutes(opts: IOpts): IRoute[];
 export {};

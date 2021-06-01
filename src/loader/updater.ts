@@ -6,9 +6,9 @@ import { debounce, eq, isEmpty } from 'lodash';
 import requireFromString from 'require-from-string';
 import { runInContext, createContext } from 'vm';
 import { extname, join, relative } from 'path';
-import { genRoutePath, assignContext } from '../utils';
-import { IRoute } from '../route/getRoutes';
-import writeRoutes from '../route/writeRoutes';
+import { genRoutePath, assignContext, collectScrollBehavior } from '../utils';
+import { IRoute } from '../route/find';
+import writeRoutes from '../route/write';
 
 /**
  * @file 把 router block 的变化同步到 routes
@@ -31,6 +31,7 @@ export function initUpdater(api: IApi) {
     // 把 routes.ts 读到内存
     const routes = requireFromString(content.replace('export default', 'module.exports ='));
     let isModify = false;
+    let isNeedMdf = false;
 
     // 递归找到对应的路由对象
     function routePatch(route: IRoute) {
@@ -38,6 +39,8 @@ export function initUpdater(api: IApi) {
       if (route.path === routePath) {
         const context = createContext({ temp: {} });
         runInContext(`temp=${source}`, context);
+        // 滚动行为
+        isNeedMdf = collectScrollBehavior(context);
 
         const temp = assignContext(context);
         Object.keys(temp).forEach((k) => {
@@ -54,6 +57,10 @@ export function initUpdater(api: IApi) {
 
     if (isModify) {
       writeRoutes(routes, api);
+    }
+    // 需要触发 generatorCode
+    if (isNeedMdf) {
+
     }
   }, 200);
 }

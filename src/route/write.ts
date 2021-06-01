@@ -1,7 +1,7 @@
 import { IApi } from '@mdfjs/types';
 import { prettierFormat, errorPrint } from '@mdfjs/utils';
 import { join } from 'path';
-import { IRoute } from './getRoutes';
+import { IRoute } from './find';
 
 /**
  * @file 将收集到的 routes 写入 .tmp/routes.ts

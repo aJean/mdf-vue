@@ -1,9 +1,9 @@
 import { resolve as resolvePath } from 'path';
 import { IApi, IJoi } from '@mdfjs/types';
 import { chalkPrints, genRoutesPath } from '@mdfjs/utils';
-import getRoutes from './getRoutes';
-import mergeRoutes from './mergeRoutes';
-import writeRoutes from './writeRoutes';
+import findRoutes from './find';
+import mergeRoutes from './merge';
+import writeRoutes from './write';
 import { initUpdater } from '../loader/updater';
 
 /**
@@ -35,7 +35,9 @@ export default function routes(api: IApi) {
     },
   });
 
+  // 加载 block updater，因为在 done 后才执行不会影响 build
   api.addProcessDone(() => initUpdater(api));
+
   api.onCodeGenerate(function () {
     genRoutes();
 
@@ -51,10 +53,10 @@ export default function routes(api: IApi) {
   });
 
   /**
-   * @multi 生成用户路由文件
+   * 生成用户路由文件
    */
   function genRoutes() {
-    const routes = getRoutes({ root: routesPath.replace('/pages', '') });
+    const routes = findRoutes({ root: routesPath.replace('/pages', '') });
 
     mergeRoutes(routes, api);
     writeRoutes(routes, api);

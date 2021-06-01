@@ -137,3 +137,33 @@ export function endLookup() {
     afterEach: null,
   };
 }
+
+/**
+ * mdf 构建使用缓存
+ */
+export const mdfCache: any = {
+  setScollBehavior(fn: Function) {
+    this.ScollBehavior = fn.toString();
+  },
+
+  getScrollBehavior() {
+    return this.ScollBehavior;
+  },
+};
+
+export function collectScrollBehavior(context: any) {
+  const temp = context.temp;
+  const scrollBehavior = temp.scrollBehavior;
+
+  // 如果 block 里面定义了 scrollBehaviors
+  if (scrollBehavior) {
+    const oldScroll = mdfCache.getScrollBehavior();
+
+    mdfCache.setScollBehavior(scrollBehavior);
+    delete temp.scrollBehavior;
+
+    return oldScroll != scrollBehavior;
+  }
+
+  return false;
+}

@@ -4,7 +4,7 @@ import { camelCase } from 'lodash';
 import { findFile, genRoutePath, winPath, RE_DYNAMIC_ROUTE } from '../utils';
 
 /**
- * @file 获取路由列表
+ * @file 查找并生成路由列表
  */
 
 interface IOpts {
@@ -70,15 +70,15 @@ function pathToRoute(opts: IOpts, memo: IRoute[], path: string) {
     // 查找目录下的 layout 作为本级目录路由，注意 index 在 files 里处理，只作为普通路由
     const layout = findFile({ base: absPath, pattern: 'layout', type: 'javascript' });
     // 递归查找子目录
-    const children = getRoutes({ ...opts, parentDir: dir });
+    const children = findRoutes({ ...opts, parentDir: dir });
     const routePath = genRoutePath(dir);
     const routeName = camelCase(routePath);
     const route: IRoute = { path: routePath, children: null, name: routeName, __isDynamic };
 
     if (layout) {
       route.componentPath = layout.path;
-      // 目录本身不存在实体路由，单纯作为 parent path
     } else {
+      // 目录本身不存在实体路由，单纯作为 parent path
       route.__toMerge = true;
     }
 
@@ -114,15 +114,11 @@ function pathToRoute(opts: IOpts, memo: IRoute[], path: string) {
  * 目前都使用 lazy 模式
  */
 function addImport(route: IRoute, opts: IOpts) {
-  const path = route.componentPath;
-
-  if (path) {
+  if (route.componentPath) {
     try {
-      let componentPath = winPath(relative(opts.root, path));
       // typescript 不允许 import .ts|tsx
-      componentPath = componentPath.replace(/\.(ts|tsx)$/, '');
-
-      route.component = new Function("return import('@/" + componentPath + "');");
+      const importPath = winPath(relative(opts.root, route.componentPath)).replace(/\.(ts|tsx)$/, '');
+      route.component = new Function(`return import('@/${importPath}');`);
     } catch (error) {
       console.error(error);
     }
@@ -142,13 +138,15 @@ function eliminateRoutes(routes: IRoute[]): IRoute[] {
     } else {
       memo.push(route);
     }
+
     return memo;
   }, [] as IRoute[]);
 }
 
-export default function getRoutes(opts: IOpts) {
+export default function findRoutes(opts: IOpts) {
   let routes;
 
+  // 根目录 pages
   if (!opts.parentDir) {
     routes = pathToRoute(opts, [], 'pages');
   } else {

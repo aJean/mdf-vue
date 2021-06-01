@@ -49,4 +49,9 @@ export declare function endLookup(): {
     beforeEnter: null;
     afterEach: null;
 };
+/**
+ * mdf 构建使用缓存
+ */
+export declare const mdfCache: any;
+export declare function collectScrollBehavior(context: any): boolean;
 export {};

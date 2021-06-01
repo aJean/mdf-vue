@@ -7,8 +7,9 @@ import chain from './compiler/chain';
 
 export default function (api: IApi) {
   const { project } = api.getConfig();
+  project.type;
 
-  // 设置入口文件
+  // TODO: 支持多入口
   api.changeUserConfig((config: any) => {
     config.appEntry = `${api.cwd}/.tmp/mdf.ts`;
     return config;

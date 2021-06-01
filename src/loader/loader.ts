@@ -7,7 +7,7 @@ import { getUpdater } from './updater';
 export default function (source: string, map: any) {
   const updater = getUpdater();
 
-  // 遗留问题：把已经存在的 router block 删除不会出发 updater
+  // 遗留问题：把已经存在的 router block 删除不会触发 updater
   if (updater && map) {
     const filename = map.sources[0];
     updater && updater({ filename, source });
