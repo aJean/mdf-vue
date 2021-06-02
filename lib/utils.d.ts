@@ -53,5 +53,5 @@ export declare function endLookup(): {
  * mdf 构建使用缓存
  */
 export declare const mdfCache: any;
-export declare function collectScrollBehavior(context: any): boolean;
+export declare function collectScrollCache(context: any, name: string): boolean;
 export {};

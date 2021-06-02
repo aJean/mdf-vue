@@ -142,27 +142,38 @@ export function endLookup() {
  * mdf 构建使用缓存
  */
 export const mdfCache: any = {
-  setScollBehavior(fn: Function) {
-    this.ScollBehavior = fn.toString();
+  setScollCache(name: string, fn: Function) {
+    this.scrollCache = {
+      name,
+      fn: fn.toString(),
+    };
   },
 
-  getScrollBehavior() {
-    return this.ScollBehavior;
+  getScrollCache() {
+    return this.scrollCache;
+  },
+
+  delScrollCache() {
+    delete this.scrollCache;
   },
 };
 
-export function collectScrollBehavior(context: any) {
+export function collectScrollCache(context: any, name: string) {
   const temp = context.temp;
-  const scrollBehavior = temp.scrollBehavior;
+  const fn = temp.scrollBehavior;
+  const cache = mdfCache.getScrollCache();
+
+  delete temp.scrollBehavior;
 
   // 如果 block 里面定义了 scrollBehaviors
-  if (scrollBehavior) {
-    const oldScroll = mdfCache.getScrollBehavior();
+  if (fn) {
+    mdfCache.setScollCache(name, fn.toString());
 
-    mdfCache.setScollBehavior(scrollBehavior);
-    delete temp.scrollBehavior;
-
-    return oldScroll != scrollBehavior;
+    return true;
+  } else if (cache && cache.name == name) {
+    // 说明是删除
+    mdfCache.delScrollCache();
+    return true;
   }
 
   return false;

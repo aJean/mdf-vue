@@ -6,9 +6,10 @@ import { debounce, eq, isEmpty } from 'lodash';
 import requireFromString from 'require-from-string';
 import { runInContext, createContext } from 'vm';
 import { extname, join, relative } from 'path';
-import { genRoutePath, assignContext, collectScrollBehavior } from '../utils';
+import { genRoutePath, assignContext, collectScrollCache } from '../utils';
 import { IRoute } from '../route/find';
 import writeRoutes from '../route/write';
+import { genMdf } from '../mdf/mdf';
 
 /**
  * @file 把 router block 的变化同步到 routes
@@ -40,7 +41,7 @@ export function initUpdater(api: IApi) {
         const context = createContext({ temp: {} });
         runInContext(`temp=${source}`, context);
         // 滚动行为
-        isNeedMdf = collectScrollBehavior(context);
+        isNeedMdf = collectScrollCache(context, filename);
 
         const temp = assignContext(context);
         Object.keys(temp).forEach((k) => {
@@ -58,9 +59,9 @@ export function initUpdater(api: IApi) {
     if (isModify) {
       writeRoutes(routes, api);
     }
-    // 需要触发 generatorCode
+    // 需要重新生产入口文件
     if (isNeedMdf) {
-
+      genMdf(api);
     }
   }, 200);
 }

@@ -8,26 +8,30 @@ import { mdfCache } from '../utils';
  */
 
 export default function entry(api: IApi) {
+  api.onCodeGenerate(() => genMdf(api));
+}
+
+export function genMdf(api: IApi) {
   const { paths, Mustache } = api;
-  const { type, base = '' } = api.getConfig().history;
+  const tpl = api.getFile(join(__dirname, 'mdf.tpl'));
+  const content = Mustache.render(tpl, { historyFn: genHistory(), scrollCache: mdfCache.getScrollCache() });
 
-  let historyFn = `createMemoryHistory('${base}')`;
+  function genHistory() {
+    const { type, base = '' } = api.getConfig().history;
+    let historyFn = `createMemoryHistory('${base}')`;
 
-  switch (type) {
-    case 'hash':
-      historyFn = `createWebHashHistory('${base}')`;
-      break;
+    switch (type) {
+      case 'hash':
+        historyFn = `createWebHashHistory('${base}')`;
+        break;
 
-    case 'browser':
-      historyFn = `createWebHistory('${base}')`;
-      break;
+      case 'browser':
+        historyFn = `createWebHistory('${base}')`;
+        break;
+    }
+
+    return historyFn;
   }
 
-  api.onCodeGenerate(() => {
-    const scrollBehavior = mdfCache.getScrollBehavior();
-    const tpl = api.getFile(join(__dirname, 'mdf.tpl'));
-    const content = Mustache.render(tpl, { historyFn, scrollBehavior });
-
-    api.writeFile(`${paths.absTmpPath}/mdf.ts`, prettierFormat(content));
-  });
+  api.writeFile(`${paths.absTmpPath}/mdf.ts`, prettierFormat(content));
 }

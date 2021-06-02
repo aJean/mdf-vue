@@ -11,10 +11,10 @@ import { plugin, config } from './plugins/plugin';
 const router = VueRouter.createRouter({
   history: VueRouter.{{{ historyFn }}},
   routes: routes as any,
-  {{#scrollBehavior}}
+  {{#scrollCache}}
   // @ts-ignore
-  {{{ scrollBehavior }}},
-  {{/scrollBehavior}}
+  {{{ scrollCache.fn }}},
+  {{/scrollCache}}
 });
 
 const app = createApp({
