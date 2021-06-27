@@ -38,18 +38,21 @@ export default function routes(api: IApi) {
   // 加载 block updater，因为在 done 后才执行不会影响 build
   api.addProcessDone(() => initUpdater(api));
 
-  api.onCodeGenerate(function () {
-    genRoutes();
+  api.onCodeGenerate({
+    name: 'genVueRoutes',
+    fn() {
+      genRoutes();
 
-    watch({
-      api,
-      watchOpts: {
-        path: resolvePath(routesPath),
-        keys: ['add', 'unlink', 'addDir', 'unlinkDir'],
-        onChange: genRoutes,
-      },
-      onExit: () => chalkPrints([['unwatch:', 'yellow'], ` ${routesPath}`]),
-    });
+      watch({
+        api,
+        watchOpts: {
+          path: resolvePath(routesPath),
+          keys: ['add', 'unlink', 'addDir', 'unlinkDir'],
+          onChange: genRoutes,
+        },
+        onExit: () => chalkPrints([['unwatch:', 'yellow'], ` ${routesPath}`]),
+      });
+    },
   });
 
   /**

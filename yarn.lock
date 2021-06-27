@@ -1316,14 +1316,14 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@mdfjs/core@^0.1.26":
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/@mdfjs/core/-/core-0.1.26.tgz#77d81cbf3d79e3dcb31aad2e6ad18f11c52ad5c9"
-  integrity sha512-e0yCPEFKzr1LWtNmGoe0F7it+bnkBAu+Wd6lch2v1lHQTs/Cv13r4XmTqA8c6OUy7CFU6eSnvdWlAhiGN+8ctg==
+"@mdfjs/core@^0.1.28":
+  version "0.1.28"
+  resolved "https://registry.yarnpkg.com/@mdfjs/core/-/core-0.1.28.tgz#26b49325f4ba4526bbe7a71c701deac0a63c5d52"
+  integrity sha512-VktaaL6cpyuPy1JMf1v6tMWGtRbQzGeVyWS/dVdgy9xDyqnx7KgFdPVP2JQwo3GqIeqOba94/VBRuUQtd9eZCA==
   dependencies:
-    "@mdfjs/records" "^0.1.26"
-    "@mdfjs/runtime" "^0.1.26"
-    "@mdfjs/utils" "^0.1.26"
+    "@mdfjs/records" "^0.1.28"
+    "@mdfjs/runtime" "^0.1.28"
+    "@mdfjs/utils" "^0.1.28"
     "@types/mkdirp" "1.0.1"
     "@types/mustache" "4.0.1"
     "@types/webpack" "4.41.25"
@@ -1335,36 +1335,36 @@
     reflect-metadata "^0.1.13"
     webpack-chain "6.5.1"
 
-"@mdfjs/records@^0.1.26":
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/@mdfjs/records/-/records-0.1.26.tgz#8662289121196aa0e29ec57a08b15ff97cc92aaf"
-  integrity sha512-vpmceKm5XvYdaG8+HQTBgHbeI6vBCbZoRCCOc+uFqqf4UIeuwDzszy7TDw2as5jkDcUF8Y/J+cLg0r9xXnmreg==
+"@mdfjs/records@^0.1.28":
+  version "0.1.28"
+  resolved "https://registry.yarnpkg.com/@mdfjs/records/-/records-0.1.28.tgz#a9ac7f7354774d19570ea4d2a2e5cc22461dba63"
+  integrity sha512-2HRhuAi64K6L6kXXBNpmZtF0DRcJexDnyGe9vHyv+lmWlb+LDNTxgKKxtBIGlLGs+AarKiH5ewIGQr8PlsCWjA==
 
-"@mdfjs/runtime@^0.1.26":
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/@mdfjs/runtime/-/runtime-0.1.26.tgz#69495a57a66cc8be1d708de8ed48d1048482a244"
-  integrity sha512-zI0kKWIDyHLY4SJPm1KqUGwZ5n2AQwIdymEw+Kp7b8L3xBCprVUM6cnVGEHRBiXx6RbDwkVGGSeTyN6e2BqXFw==
+"@mdfjs/runtime@^0.1.28":
+  version "0.1.28"
+  resolved "https://registry.yarnpkg.com/@mdfjs/runtime/-/runtime-0.1.28.tgz#f178fd7c936fea481d512887b923229d039d2e02"
+  integrity sha512-OGQa4xpKOGgnnZTU9krddnbhTLCYzxqXmJYASlFgBO4nLqY+OIqfYMAznK+7P+sMk66uyqMWFdbQWVjNYFqEZA==
   dependencies:
-    "@mdfjs/records" "^0.1.26"
+    "@mdfjs/records" "^0.1.28"
 
-"@mdfjs/types@^0.1.26":
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/@mdfjs/types/-/types-0.1.26.tgz#8b2e3ff506c78317cc20568be8dc16cea42687f9"
-  integrity sha512-wBC3Mw3U7XLdgj8nvwrLyHENJ0rh/3OXIM0xFb16c1XctLNsylvfNUw2C2GPa9MgdnH4VP+XDZrSaXJvs5Evtg==
+"@mdfjs/types@^0.1.28":
+  version "0.1.28"
+  resolved "https://registry.yarnpkg.com/@mdfjs/types/-/types-0.1.28.tgz#10a871db4433b7ddeec03ebf7365984af04cd288"
+  integrity sha512-l1sO5xguARGzC4zNceeGXl9tllpQyMgGKRSbtMToTQTnwFYL0SDW0q4A6wO0Ey4TpB5+4BJ4VPfPflt0k4xoZA==
   dependencies:
-    "@mdfjs/core" "^0.1.26"
-    "@mdfjs/records" "^0.1.26"
+    "@mdfjs/core" "^0.1.28"
+    "@mdfjs/records" "^0.1.28"
 
-"@mdfjs/utils@^0.1.26":
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/@mdfjs/utils/-/utils-0.1.26.tgz#29fda16deb06cc76c83bb89d6a98414b97697700"
-  integrity sha512-/F1WiKcmRzf+EVqEr6aEOFV63Z6TvkKNHtA3UMAnq6dtqEycEsq1CLVfZ5750cH0w6N7Grbc5iYUac0iTGDLig==
+"@mdfjs/utils@^0.1.28":
+  version "0.1.28"
+  resolved "https://registry.yarnpkg.com/@mdfjs/utils/-/utils-0.1.28.tgz#5c6a6d9128bd875b75450e5cabc2b53f1a080dac"
+  integrity sha512-juxVhnh+s2mgbFrb3Zf9b6HiraZlazm702w34i9qPYw4sQTGehjXhA6VTxB/tqh94ARBKmWPYx0Eox7Nn5QJOQ==
   dependencies:
     "@babel/core" "7.12.3"
     "@babel/preset-env" "7.12.1"
     "@babel/preset-typescript" "7.12.1"
     "@babel/register" "7.12.1"
-    "@mdfjs/records" "^0.1.26"
+    "@mdfjs/records" "^0.1.28"
     babel-plugin-module-resolver "4.0.0"
     chalk "4.1.0"
     chokidar "3.4.3"

@@ -8,7 +8,12 @@ import { mdfCache } from '../utils';
  */
 
 export default function entry(api: IApi) {
-  api.onCodeGenerate(() => genMdf(api));
+  api.onCodeGenerate({
+    name: 'genVue',
+    fn() {
+      genMdf(api);
+    },
+  });
 }
 
 export function genMdf(api: IApi) {
