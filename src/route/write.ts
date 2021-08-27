@@ -61,7 +61,7 @@ export default function writeRoutes(routes: IRoute[], api: IApi) {
 
     // mustache partial
     api.writeFile(`${paths.absTmpPath}/routes.ts`, prettierFormat(content));
-  } catch (e) {
+  } catch (e: any) {
     errorPrint(e);
     process.exit(1);
   }
