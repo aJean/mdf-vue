@@ -5,7 +5,7 @@ import geBabelOpts from './babel';
  * @file 配置 @mdfjs/vue 的 webpack chain
  */
 
-const { VueLoaderPlugin } = require('vue-loader');
+const { VueLoaderPlugin } = require('vue-loader/dist/index');
 export default function (api: IApi) {
   const { isDev } = api.getConfig();
 
