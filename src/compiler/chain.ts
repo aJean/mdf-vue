@@ -75,7 +75,6 @@ export default function (api: IApi) {
 
     chain.plugin('fork-ts-checker').use(require.resolve('fork-ts-checker-webpack-plugin'), [
       {
-        async: false,
         typescript: {
           extensions: {
             vue: {
