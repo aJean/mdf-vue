@@ -40,6 +40,7 @@ export default function (api: IApi) {
       name: 'tsLoader',
       loader: require.resolve('ts-loader'),
       options: {
+        // 使用 fork-ts-checker 做类型检查
         transpileOnly: true,
         appendTsSuffixTo: ['\\.vue$'],
       },
@@ -74,6 +75,7 @@ export default function (api: IApi) {
 
     chain.plugin('fork-ts-checker').use(require.resolve('fork-ts-checker-webpack-plugin'), [
       {
+        async: false,
         typescript: {
           extensions: {
             vue: {
@@ -88,6 +90,5 @@ export default function (api: IApi) {
         },
       },
     ]);
-
   });
 }
