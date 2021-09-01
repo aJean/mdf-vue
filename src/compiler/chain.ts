@@ -71,6 +71,8 @@ export default function (api: IApi) {
       .use('routerLoader')
       .loader(require.resolve('../loader/loader'));
 
+    chain.resolve.extensions.add('.vue');
+
     chain.plugin('vueLoadingPlugin').use(VueLoaderPlugin);
 
     chain.plugin('fork-ts-checker').use(require.resolve('fork-ts-checker-webpack-plugin'), [
