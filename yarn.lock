@@ -1284,17 +1284,17 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@mdfjs/core@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@mdfjs/core/-/core-0.2.4.tgz#344c4c37339600e261ac481f799ece9ed8b72329"
-  integrity sha512-EDaBDUv5cWCURAGqvxTpbhICLG5OFAWwl/4KWgzBG66B/OC6Plo+AFOxb3gco+1vXoLB2PFB0uDobDw4Vu5M6g==
+"@mdfjs/core@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@mdfjs/core/-/core-0.2.5.tgz#c40b957e38e8711c4137accede0e82dcc9312f94"
+  integrity sha512-Ic9Ms3BRobFXGTuok7KRd0WnhJboVRy41KyhPxf20i6v8k6paCYkfvEyDs9f6N0gnwcS6wP1Bsu6+g+o1sjwDA==
   dependencies:
-    "@mdfjs/records" "^0.2.4"
-    "@mdfjs/runtime" "^0.2.4"
-    "@mdfjs/utils" "^0.2.4"
+    "@mdfjs/records" "^0.2.5"
+    "@mdfjs/runtime" "^0.2.5"
+    "@mdfjs/utils" "^0.2.5"
     "@types/mkdirp" "1.0.1"
     "@types/mustache" "4.0.1"
-    "@types/webpack" "4.41.25"
+    "@types/webpack" "5.28.0"
     chalk "4.1.0"
     dotenv "8.2.0"
     joi "17.3.0"
@@ -1303,36 +1303,36 @@
     reflect-metadata "^0.1.13"
     webpack-chain "6.5.1"
 
-"@mdfjs/records@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@mdfjs/records/-/records-0.2.4.tgz#41c177b7796bd85329a2c7bb0d10988382d53afc"
-  integrity sha512-vkIpZ96r+ZjyOVKXCXBo1DUH9xFA8CCOkrubL1Kwnnd86NyfAJNRvo4z4keux1yN7OYBZhSqbaUMv4hodp6ytA==
+"@mdfjs/records@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@mdfjs/records/-/records-0.2.5.tgz#321c8bc54ac57c66eb3c402ea9a9d6b7291bffd5"
+  integrity sha512-oX8KHcVgNFdv6yMVG5ZWDKBykXCam7dy8V5riUsn0zHNnfvygQhW8zB9SoTKNhTIfDNiXdOQgUtOfmG7eSS3eA==
 
-"@mdfjs/runtime@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@mdfjs/runtime/-/runtime-0.2.4.tgz#b36e331a49901878991e77854b9b8f3804624250"
-  integrity sha512-eLlI52yAVuZslH8pK5gPYBVjdTKHMz7VlHfu66dW0Sv1MWc6q0vCVRDId32vjnROV/swtgEPYZx7doqWTJwTJQ==
+"@mdfjs/runtime@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@mdfjs/runtime/-/runtime-0.2.5.tgz#57633a98e3835e89ca55b82f9c8fda9ff2ba3717"
+  integrity sha512-2lwmtjp0N3mat+UAoRAZBY80mjwkmkTzrlRsQ/rCHmUC2bGGEqzrvfPKgJTN1FRelOjD7lKO5XT9L4jb4wzjvw==
   dependencies:
-    "@mdfjs/records" "^0.2.4"
+    "@mdfjs/records" "^0.2.5"
 
-"@mdfjs/types@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@mdfjs/types/-/types-0.2.4.tgz#4aa225cb9d0da8d43bd2a868e1f6548ef1ba0faf"
-  integrity sha512-xPth9a+COyXeAlvAbyQKFLcPN0j1nuRkAkDrCPO2K471QJgz4B3/yZlaQuDEzNO+z6aNXEzWazTlB9lEZRSjeQ==
+"@mdfjs/types@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@mdfjs/types/-/types-0.2.5.tgz#d74dec0a1e0abbd898742dc7a47d5a18c684aa6b"
+  integrity sha512-Xr1B57KA7NdHB7fwEFeyath9wo72YT/unPIGIV3RcKsfL5Jq1oOx+q7nFnGLnh2jDgdXuNN0R82UBuZsF+1ktA==
   dependencies:
-    "@mdfjs/core" "^0.2.4"
-    "@mdfjs/records" "^0.2.4"
+    "@mdfjs/core" "^0.2.5"
+    "@mdfjs/records" "^0.2.5"
 
-"@mdfjs/utils@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@mdfjs/utils/-/utils-0.2.4.tgz#04f22c74fc85a9676f3738dfe7ab47dbb0adca2f"
-  integrity sha512-8/tXw6aGnAMunjxQah85VzPZJCgBusUS5N2GNeqqk5JePt9GS0fjBLvk29EEPSjL3SOW1gArZD9JBcN5EFKtTg==
+"@mdfjs/utils@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@mdfjs/utils/-/utils-0.2.5.tgz#27e4aa73885964eccd1ded4dc2935d6e65c0858d"
+  integrity sha512-LTtK7uQF2xyBwLNF1RJbhpm6KSsBVZEvRMhzGJnbommYhblfRE7QEGMPjY9rj/bmbqOWomnd9KapeVfuuw/XBg==
   dependencies:
     "@babel/core" "7.12.3"
     "@babel/preset-env" "7.12.1"
     "@babel/preset-typescript" "7.12.1"
     "@babel/register" "7.12.1"
-    "@mdfjs/records" "^0.2.4"
+    "@mdfjs/records" "^0.2.5"
     babel-plugin-module-resolver "4.0.0"
     chalk "4.1.0"
     chokidar "3.4.3"
@@ -1548,13 +1548,6 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@types/anymatch@*":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-3.0.0.tgz#c95ff14401dbb2869913afac3935af4ad0d37f1a"
-  integrity sha512-qLChUo6yhpQ9k905NwL74GU7TxH+9UODwwQ6ICNI+O6EDMExqH/Cv9NsbmcZ7yC/rRXJ/AHCzfgjsFRY5fKjYw==
-  dependencies:
-    anymatch "*"
-
 "@types/eslint-scope@^3.7.0":
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.1.tgz#8dc390a7b4f9dd9f1284629efce982e41612116e"
@@ -1640,45 +1633,14 @@
   dependencies:
     "@types/node" "*"
 
-"@types/source-list-map@*":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
-  integrity sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA==
-
-"@types/tapable@*":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-2.2.2.tgz#1d324b524190954a5700d86b6328bfc57e1fda48"
-  integrity sha512-ujqOVJEeLcwpDVJPnp/k3u1UXmTKq5urJq9fO8aUKg8Vlel5RNOFbVKEfqfh6wGfF/M+HiTJlBJMLC1aDfyf0Q==
+"@types/webpack@5.28.0":
+  version "5.28.0"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-5.28.0.tgz#78dde06212f038d77e54116cfe69e88ae9ed2c03"
+  integrity sha512-8cP0CzcxUiFuA9xGJkfeVpqmWTk9nx6CWwamRGCj95ph1SmlRRk9KlCZ6avhCbZd4L68LvYT6l1kpdEnQXrF8w==
   dependencies:
+    "@types/node" "*"
     tapable "^2.2.0"
-
-"@types/uglify-js@*":
-  version "3.13.1"
-  resolved "https://registry.yarnpkg.com/@types/uglify-js/-/uglify-js-3.13.1.tgz#5e889e9e81e94245c75b6450600e1c5ea2878aea"
-  integrity sha512-O3MmRAk6ZuAKa9CHgg0Pr0+lUOqoMLpc9AS4R8ano2auvsg7IE8syF3Xh/NPr26TWklxYcqoEEFdzLLs1fV9PQ==
-  dependencies:
-    source-map "^0.6.1"
-
-"@types/webpack-sources@*":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-3.2.0.tgz#16d759ba096c289034b26553d2df1bf45248d38b"
-  integrity sha512-Ft7YH3lEVRQ6ls8k4Ff1oB4jN6oy/XmU6tQISKdhfh+1mR+viZFphS6WL0IrtDOzvefmJg5a0s7ZQoRXwqTEFg==
-  dependencies:
-    "@types/node" "*"
-    "@types/source-list-map" "*"
-    source-map "^0.7.3"
-
-"@types/webpack@4.41.25":
-  version "4.41.25"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.41.25.tgz#4d3b5aecc4e44117b376280fbfd2dc36697968c4"
-  integrity sha512-cr6kZ+4m9lp86ytQc1jPOJXgINQyz3kLLunZ57jznW+WIAL0JqZbGubQk4GlD42MuQL5JGOABrxdpqqWeovlVQ==
-  dependencies:
-    "@types/anymatch" "*"
-    "@types/node" "*"
-    "@types/tapable" "*"
-    "@types/uglify-js" "*"
-    "@types/webpack-sources" "*"
-    source-map "^0.6.0"
+    webpack "^5"
 
 "@vue/babel-helper-vue-transform-on@^1.0.2":
   version "1.0.2"
@@ -2051,7 +2013,7 @@ ansi-wrap@0.1.0, ansi-wrap@^0.1.0:
   resolved "https://registry.yarnpkg.com/ansi-wrap/-/ansi-wrap-0.1.0.tgz#a82250ddb0015e9a27ca82e82ea603bbfa45efaf"
   integrity sha1-qCJQ3bABXponyoLoLqYDu/pF768=
 
-anymatch@*, anymatch@~3.1.1, anymatch@~3.1.2:
+anymatch@~3.1.1, anymatch@~3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-3.1.2.tgz#c0557c096af32f106198f4f4e2a383537e378716"
   integrity sha512-P43ePfOAIupkguHUycrc4qJ9kz8ZiuOUijaETwX7THt0Y/GNK7v0aa8rY816xWjZ7rJdA5XdMcpVFTKMq+RvWg==
@@ -7081,7 +7043,7 @@ webpack-sources@^3.2.0:
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-3.2.0.tgz#b16973bcf844ebcdb3afde32eda1c04d0b90f89d"
   integrity sha512-fahN08Et7P9trej8xz/Z7eRu8ltyiygEo/hnRi9KqBUs80KeDcnf96ZJo++ewWd84fEf3xSX9bp4ZS9hbw0OBw==
 
-webpack@5.51.1:
+webpack@5.51.1, webpack@^5:
   version "5.51.1"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.51.1.tgz#41bebf38dccab9a89487b16dbe95c22e147aac57"
   integrity sha512-xsn3lwqEKoFvqn4JQggPSRxE4dhsRcysWTqYABAZlmavcoTmwlOb9b1N36Inbt/eIispSkuHa80/FJkDTPos1A==
