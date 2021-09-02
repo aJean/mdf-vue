@@ -12,6 +12,9 @@ export default function (api: IApi) {
   api.chainWebpack((chain) => {
     const module = chain.module;
     module.rules.delete('babelJs');
+    
+    // .vue
+    chain.resolve.extensions.add('.vue');
 
     const tsRule = module
       .rule('vueJs')
@@ -70,8 +73,6 @@ export default function (api: IApi) {
       .resourceQuery(/blockType=router/)
       .use('routerLoader')
       .loader(require.resolve('../loader/loader'));
-
-    chain.resolve.extensions.add('.vue');
 
     chain.plugin('vueLoadingPlugin').use(VueLoaderPlugin);
 
