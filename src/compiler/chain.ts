@@ -12,7 +12,7 @@ export default function (api: IApi) {
   api.chainWebpack((chain) => {
     const module = chain.module;
     module.rules.delete('babelJs');
-    
+
     // .vue
     chain.resolve.extensions.add('.vue');
 
@@ -78,6 +78,12 @@ export default function (api: IApi) {
 
     chain.plugin('fork-ts-checker').use(require.resolve('fork-ts-checker-webpack-plugin'), [
       {
+        logger: {
+          infrastructure: 'silent',
+          issues: 'webpack-infrastructure',
+          devServer: true,
+        },
+
         typescript: {
           extensions: {
             vue: {
@@ -85,6 +91,7 @@ export default function (api: IApi) {
               compiler: require.resolve('@vue/compiler-sfc'),
             },
           },
+
           diagnosticOptions: {
             semantic: true,
             syntactic: false,
