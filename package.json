@@ -1,6 +1,6 @@
 {
   "name": "@mdfjs/vue",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "vue plugins for mdfjs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
