@@ -12,7 +12,7 @@
   "license": "MIT",
   "scripts": {
     "build": "father-build",
-    "pub": "yarn publish && git push --follow-tags"
+    "pub": "yarn publish && git push"
   },
   "dependencies": {
     "@babel/core": "7.15.0",
