@@ -5,3 +5,7 @@ import { IApi } from '@mdfjs/types';
 export default function (api: IApi): {
     presets: string[];
 };
+/**
+ * es-lint config for vue
+ */
+export declare function lint(opts: any): any;
