@@ -25,8 +25,6 @@ export default function (api: IApi) {
  * es-lint config for vue
  */
 export function lint(opts: any) {
-  opts.plugins.push('vue');
-
   Object.assign(opts.rules, {
     'vue/comment-directive': 'error',
     'vue/jsx-uses-vars': 'error',
@@ -88,7 +86,8 @@ export function lint(opts: any) {
     'vue/html-end-tags': 'warn',
     'vue/html-indent': 'warn',
     'vue/html-quotes': 'warn',
-    'vue/html-self-closing': 'warn',
+    // 自闭合标签
+    'vue/html-self-closing': 'off',
     'vue/max-attributes-per-line': 'warn',
     'vue/multiline-html-element-content-newline': 'warn',
     'vue/mustache-interpolation-spacing': 'warn',
@@ -100,7 +99,8 @@ export function lint(opts: any) {
     'vue/require-default-prop': 'warn',
     'vue/require-explicit-emits': 'warn',
     'vue/require-prop-types': 'warn',
-    'vue/singleline-html-element-content-newline': 'warn',
+    // 换行闭合
+    'vue/singleline-html-element-content-newline': 'off',
     'vue/v-bind-style': 'warn',
     'vue/v-on-style': 'warn',
     'vue/v-slot-style': 'warn',
