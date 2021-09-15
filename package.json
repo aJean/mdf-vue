@@ -35,7 +35,8 @@
     "vue-loader": "16.5.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.172",
