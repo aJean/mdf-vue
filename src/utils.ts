@@ -55,8 +55,10 @@ export function winPath(path: string) {
 
 /**
  * 标准化 route path
+ * @param path 文件路径
+ * @param dir 页面目录
  */
-export function genRoutePath(path: string) {
+export function genRoutePath(path: string, dir: string) {
   path = winPath(path)
     .split('/')
     .map((p: string) => {
@@ -77,7 +79,9 @@ export function genRoutePath(path: string) {
   }
 
   // 退化层级: xxxx/index -> /xxxx，这也要求相同目录下不允许 layout 与 index 同时存在
-  path = `/${path}`.replace(/\/index|\/layout$/, '').replace('/pages', '');
+  path = `/${path}`.replace(/\/index|\/layout$/, '');
+  // 消除页面目录 /pages/home -> /home
+  path = path.replace(`/${dir}`, '');
 
   return path || '/';
 }

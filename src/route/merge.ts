@@ -29,7 +29,7 @@ function getBlocks(route: IRoute, api: IApi) {
 
   const code = routerBlock.content;
   if (!/\{[\s\S]*\}/m.test(code)) {
-    console.warn(`${filename} <router> 自定块必须是一个对象字符串,传入的是：${code}`);
+    console.warn(`${filename} <router> 自定块必须是一个对象字符串，传入的是：${code}`);
     return route;
   }
 
@@ -40,7 +40,7 @@ function getBlocks(route: IRoute, api: IApi) {
     console.error(error);
   }
 
-  collectScrollCache(context, filename)
+  collectScrollCache(context, filename);
   assignRoute(route, context.temp);
 
   return route;

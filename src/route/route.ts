@@ -1,6 +1,6 @@
 import { resolve as resolvePath } from 'path';
 import { IApi, IJoi } from '@mdfjs/types';
-import { chalkPrints, genRoutesPath } from '@mdfjs/utils';
+import { chalkPrints, genStaticPath } from '@mdfjs/utils';
 import findRoutes from './find';
 import mergeRoutes from './merge';
 import writeRoutes from './write';
@@ -12,7 +12,6 @@ import { initUpdater } from '../loader/updater';
 
 export default function routes(api: IApi) {
   const watch = api.createWatchFn();
-  const routesPath = genRoutesPath(api);
 
   api.describe({
     key: 'history',
@@ -41,27 +40,31 @@ export default function routes(api: IApi) {
   api.onCodeGenerate({
     name: 'genVueRoutes',
     fn() {
-      genRoutes();
+      const root = genStaticPath(api);
 
-      watch({
-        api,
-        watchOpts: {
-          path: resolvePath(routesPath),
-          keys: ['add', 'unlink', 'addDir', 'unlinkDir'],
-          onChange: genRoutes,
-        },
-        onExit: () => chalkPrints([['unwatch:', 'yellow'], ` ${routesPath}`]),
+      api.fromMeta((meta) => {
+        // 多入口监听
+        const watchPath = `${root}/${meta.PAGES}`;
+        // 生成路由配置
+        const genRoutes = () => {
+          const routes = findRoutes({ root, pageDir: meta.PAGES });
+
+          mergeRoutes(routes, api);
+          writeRoutes(routes, api, meta.ROUTES_FILE);
+        };
+
+        genRoutes();
+
+        watch({
+          api,
+          watchOpts: {
+            path: resolvePath(watchPath),
+            keys: ['add', 'unlink', 'addDir', 'unlinkDir'],
+            onChange: genRoutes,
+          },
+          onExit: () => chalkPrints([['unwatch:', 'yellow'], ` ${watchPath}`]),
+        });
       });
     },
   });
-
-  /**
-   * 生成用户路由文件
-   */
-  function genRoutes() {
-    const routes = findRoutes({ root: routesPath.replace('/pages', '') });
-
-    mergeRoutes(routes, api);
-    writeRoutes(routes, api);
-  }
 }

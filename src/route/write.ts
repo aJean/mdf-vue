@@ -49,7 +49,7 @@ function routesSerialize(routes: IRoute[]) {
   return routes;
 }
 
-export default function writeRoutes(routes: IRoute[], api: IApi) {
+export default function writeRoutes(routes: IRoute[], api: IApi, file: string) {
   const { getFile, Mustache, paths } = api;
   Mustache.templateCache = undefined;
 
@@ -60,7 +60,7 @@ export default function writeRoutes(routes: IRoute[], api: IApi) {
     const content = Mustache.render(tpl, { routes: routesData }, { item: itemTpl });
 
     // mustache partial
-    api.writeFile(`${paths.absTmpPath}/routes.ts`, prettierFormat(content));
+    api.writeFile(`${paths.absTmpPath}/${file}`, prettierFormat(content));
   } catch (e: any) {
     errorPrint(e);
     process.exit(1);

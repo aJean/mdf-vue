@@ -1,7 +1,7 @@
 import { createApp, h } from 'vue';
 import * as VueRouter from 'vue-router';
 import { PluginType } from 'mdf';
-import routes from './routes';
+import routes from '{{{ routesPath }}}';
 import { plugin, config } from './plugins/plugin';
 
 /**

@@ -9,6 +9,7 @@ import { findFile, genRoutePath, winPath, RE_DYNAMIC_ROUTE } from '../utils';
 
 interface IOpts {
   root: string;
+  pageDir: string; // 区分多入口页面目录
   parentDir?: string;
 }
 
@@ -60,7 +61,7 @@ function findPages(root: string, path?: string) {
  * 将文件路径转化为路由对象
  */
 function pathToRoute(opts: IOpts, memo: IRoute[], path: string) {
-  const { root, parentDir = '' } = opts;
+  const { root, pageDir, parentDir = '' } = opts;
   const absPath = join(root, parentDir, path);
   const __isDynamic = RE_DYNAMIC_ROUTE.test(path);
 
@@ -71,7 +72,7 @@ function pathToRoute(opts: IOpts, memo: IRoute[], path: string) {
     const layout = findFile({ base: absPath, pattern: 'layout', type: 'javascript' });
     // 递归查找子目录
     const children = findRoutes({ ...opts, parentDir: dir });
-    const routePath = genRoutePath(dir);
+    const routePath = genRoutePath(dir, pageDir);
     const routeName = camelCase(routePath);
     const route: IRoute = { path: routePath, children: null, name: routeName, __isDynamic };
 
@@ -93,7 +94,7 @@ function pathToRoute(opts: IOpts, memo: IRoute[], path: string) {
 
     // 不重复收集 layout.xx
     if (childName !== 'layout') {
-      const routePath = genRoutePath(join(parentDir, childName));
+      const routePath = genRoutePath(join(parentDir, childName), pageDir);
       const routeName = camelCase(routePath);
       const childRoute = {
         path: routePath,
@@ -148,7 +149,7 @@ export default function findRoutes(opts: IOpts) {
 
   // 根目录 pages
   if (!opts.parentDir) {
-    routes = pathToRoute(opts, [], 'pages');
+    routes = pathToRoute(opts, [], opts.pageDir);
   } else {
     const pagePaths = findPages(opts.root, opts.parentDir);
     routes = pagePaths.reduce(pathToRoute.bind(null, opts), []);

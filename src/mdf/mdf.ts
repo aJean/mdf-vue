@@ -18,11 +18,11 @@ export default function entry(api: IApi) {
 
 export function genMdf(api: IApi) {
   const { paths, Mustache } = api;
+  const { history, project } = api.getConfig();
   const tpl = api.getFile(join(__dirname, 'mdf.tpl'));
-  const content = Mustache.render(tpl, { historyFn: genHistory(), scrollCache: mdfCache.getScrollCache() });
-
-  function genHistory() {
-    const { type, base = '' } = api.getConfig().history;
+  // 路由类型
+  const genHistory = () => {
+    const { type, base = '' } = history;
     let historyFn = `createMemoryHistory('${base}')`;
 
     switch (type) {
@@ -36,7 +36,16 @@ export function genMdf(api: IApi) {
     }
 
     return historyFn;
-  }
+  };
 
-  api.writeFile(`${paths.absTmpPath}/mdf.ts`, prettierFormat(content));
+  // 此时 multi 已经被写入 META data
+  api.fromMeta((meta) => {
+    const content = Mustache.render(tpl, {
+      historyFn: genHistory(),
+      scrollCache: mdfCache.getScrollCache(),
+      routesPath: meta.ROUTES_IMPORT,
+    });
+
+    api.writeFile(`${paths.absTmpPath}/${meta.MDF_FILE}`, prettierFormat(content));
+  });
 }

@@ -1,24 +1,30 @@
 import { IApi } from '@mdfjs/types';
-import chain from './compiler/chain';
+import vueChain from './compiler/chain';
 
 /**
  * @file vue 插件集
  */
 
 export default function (api: IApi) {
-  const { project } = api.getConfig();
-  project.type;
+  // 增强 webpack chain
+  vueChain(api);
 
-  // TODO: 支持多入口
-  api.changeUserConfig((config: any) => {
-    config.appEntry = `${api.cwd}/.tmp/mdf.ts`;
-    return config;
+  // 要更前置的处理 multi，不能依赖 api.changeUserConfig
+  const { project } = api.getConfig();
+  const multi = project.multi || { index: 'pages' };
+  // 路由、mdf 生成都依赖这个元数据
+  project.multi = Object.keys(multi).map((name) => {
+    return {
+      NAME: name,
+      PAGES: multi[name],
+      MDF_FILE: `mdf-${name}.ts`,
+      ROUTES_FILE: `routes-${name}.ts`,
+      ROUTES_IMPORT: `./routes-${name}`,
+      FILE: `${api.cwd}/.tmp/mdf-${name}.ts`,
+    };
   });
 
-  chain(api);
-
-  const presets = [require.resolve('./route/route'), require.resolve('./mdf/mdf')];
-  return { presets };
+  return { presets: [require.resolve('./route/route'), require.resolve('./mdf/mdf')] };
 }
 
 /**
