@@ -11,8 +11,6 @@ import { initUpdater } from '../loader/updater';
  */
 
 export default function routes(api: IApi) {
-  const watch = api.createWatchFn();
-
   api.describe({
     key: 'history',
     config: {
@@ -42,9 +40,11 @@ export default function routes(api: IApi) {
     fn() {
       const root = genStaticPath(api);
 
+      // @ts-ignore
       api.fromMeta((meta) => {
+        const watch = api.createWatchFn();
         // 多入口监听
-        const watchPath = `${root}/${meta.PAGES}`;
+        const dir = `${root}/${meta.PAGES}`;
         // 生成路由配置
         const genRoutes = () => {
           const routes = findRoutes({ root, pageDir: meta.PAGES });
@@ -58,11 +58,11 @@ export default function routes(api: IApi) {
         watch({
           api,
           watchOpts: {
-            path: resolvePath(watchPath),
+            path: resolvePath(dir),
             keys: ['add', 'unlink', 'addDir', 'unlinkDir'],
             onChange: genRoutes,
           },
-          onExit: () => chalkPrints([['unwatch:', 'yellow'], ` ${watchPath}`]),
+          onExit: () => chalkPrints([['unwatch:', 'yellow'], ` ${dir}`]),
         });
       });
     },

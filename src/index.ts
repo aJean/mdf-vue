@@ -9,10 +9,10 @@ export default function (api: IApi) {
   // 增强 webpack chain
   vueChain(api);
 
-  // 要更前置的处理 multi，不能依赖 api.changeUserConfig
+  // 前置处理 multi，不能依赖 api.changeUserConfig
   const { project } = api.getConfig();
   const multi = project.multi || { index: 'pages' };
-  // 路由、mdf 生成都依赖这个元数据
+  // 路由、mdf 的生成都依赖这个元数据
   project.multi = Object.keys(multi).map((name) => {
     return {
       NAME: name,

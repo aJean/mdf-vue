@@ -67,7 +67,7 @@ export default function (api: IApi) {
       .use('vueLoader')
       .loader(require.resolve('vue-loader'));
 
-    // 解析自定 router block
+    // 解析自定 router-block
     module
       .rule('router')
       .resourceQuery(/blockType=router/)
