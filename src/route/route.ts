@@ -40,7 +40,6 @@ export default function routes(api: IApi) {
     fn() {
       const root = genStaticPath(api);
 
-      // @ts-ignore
       api.fromMeta((meta) => {
         const watch = api.createWatchFn();
         // 多入口监听

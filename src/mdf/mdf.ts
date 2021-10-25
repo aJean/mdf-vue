@@ -22,7 +22,7 @@ export function genMdf(api: IApi) {
   const { history } = api.getConfig();
   const tpl = api.getFile(join(__dirname, 'mdf.tpl'));
   // 路由类型
-  const genHistory = (path: string) => {
+  const genHistory = (path: any) => {
     const { type, base = '' } = history;
     const prefix = path ? `${base}/${path}` : base;
     let historyFn = `createWebHistory('${prefix}')`;
@@ -39,7 +39,7 @@ export function genMdf(api: IApi) {
     return historyFn;
   };
 
-  // @ts-ignore 此时 multi 已经被写入 META data
+  // 此时 multi 已经被写入 META data
   api.fromMeta((meta) => {
     const content = Mustache.render(tpl, {
       historyFn: genHistory(meta.NAME != 'index' && meta.NAME),
