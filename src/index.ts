@@ -59,7 +59,8 @@ export function lint(opts: any) {
     'vue/require-prop-type-constructor': 'error',
     'vue/require-render-return': 'error',
     'vue/require-v-for-key': 'error',
-    'vue/require-valid-default-prop': 'error',
+    // props 默认值设置，没必要必须是 function
+    'vue/require-valid-default-prop': 'warn',
     'vue/return-in-computed-property': 'error',
     'vue/use-v-on-exact': 'error',
     'vue/valid-template-root': 'error',
