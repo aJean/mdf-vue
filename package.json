@@ -47,8 +47,9 @@
     "html-webpack-plugin": "5.3.2"
   },
   "release-it": {
-    "git": {
+    "github": {
       "tag": false,
+      "release": false,
       "push": true
     }
   },
