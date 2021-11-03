@@ -60,7 +60,7 @@ export default function writeRoutes(routes: IRoute[], api: IApi, file: string) {
     const content = Mustache.render(tpl, { routes: routesData }, { item: itemTpl });
 
     // mustache partial
-    api.writeFile(`${paths.absTmpPath}/${file}`, prettierFormat(content));
+    api.writeFile(`${paths.absTmpPath}/routes/${file}`, prettierFormat(content));
   } catch (e: any) {
     errorPrint(e);
     process.exit(1);

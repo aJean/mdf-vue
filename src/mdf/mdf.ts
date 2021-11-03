@@ -41,12 +41,37 @@ export function genMdf(api: IApi) {
 
   // 此时 multi 已经被写入 META data
   api.fromMeta((meta) => {
+    const name = meta.NAME;
     const content = Mustache.render(tpl, {
-      historyFn: genHistory(meta.NAME != 'index' && meta.NAME),
+      entryName: name,
+      historyFn: genHistory(name != 'index' && name),
       scrollCache: mdfCache.getScrollCache(),
       routesPath: meta.ROUTES_IMPORT,
+      appPath: findAppFile(paths.absSrcPath, name),
     });
 
     api.writeFile(`${paths.absTmpPath}/${meta.MDF_FILE}`, prettierFormat(content));
   });
+
+  /**
+   * 查找项目配置文件，可以共用 app.ts
+   */
+  function findAppFile(prefix: string, name: string) {
+    const paths = [
+      `${prefix}/client/app-${name}.ts`,
+      `${prefix}/app-${name}.ts`,
+      `${prefix}/client/app.ts`,
+      `${prefix}/app.ts`,
+    ];
+
+    while (paths.length) {
+      const path = paths.shift();
+
+      if (api.isExist(path!)) {
+        return path;
+      }
+    }
+
+    return undefined;
+  }
 }

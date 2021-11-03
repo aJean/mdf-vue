@@ -19,7 +19,7 @@ export default function (api: IApi) {
       PAGES: multi[name],
       MDF_FILE: `mdf-${name}.ts`,
       ROUTES_FILE: `routes-${name}.ts`,
-      ROUTES_IMPORT: `./routes-${name}`,
+      ROUTES_IMPORT: `./routes/routes-${name}`,
       FILE: `${api.cwd}/.tmp/mdf-${name}.ts`,
     };
   });
